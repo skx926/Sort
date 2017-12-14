@@ -117,6 +117,20 @@ void heapSort(int *nums, int count) {
     }
 }
 
+// 希尔排序
+void shellSort(int *nums, int count) {
+    for (int gap = count / 2; gap > 0; gap /= 2) {
+        // 这里的i表示每个分组里的最后一个数据
+        for (int i = gap; i < count; i++) {
+            for (int j = i; j > 0; j -= gap) {
+                if (nums[j - 1] > nums[j]) {
+                    swap(nums, j - 1, j);
+                }
+            }
+        }
+    }
+}
+
 int main(int argc, const char * argv[]) {
     int nums[count] = {2, 1, 3, 6, 4, 4, 1, 0, 5, 8, 7};
     
@@ -124,7 +138,8 @@ int main(int argc, const char * argv[]) {
     //    selectionSort(nums, count);
     //    insertionSort(nums, count);
     //    quickSort(nums, count);
-    heapSort(nums, count);
+    //    heapSort(nums, count);
+    shellSort(nums, count);
     
     for (int i = 0; i < count; i++) {
         printf("%d ", nums[i]);
