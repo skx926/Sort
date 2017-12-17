@@ -8,6 +8,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 static const int count = 11;
 
@@ -165,6 +166,29 @@ void mergeSort(int *nums, int left, int right) {
     merge(nums, left, middle, right);
 }
 
+// 计数排序
+void countSort(int *nums, int count) {
+    int max = 0;
+    for (int i = 0; i < count; i++) {
+        if (nums[i] > max) {
+            max = nums[i];
+        }
+    }
+    int *buckets = malloc(sizeof(int) * max);
+    memset(buckets, 0, max);
+    for (int i = 0; i < count; i++) {
+        buckets[nums[i]] += 1;
+    }
+    for (int i = 0, k = 0; i < max; i++) {
+        while (buckets[i]) {
+            nums[k++] = i;
+            buckets[i]--;
+        }
+    }
+}
+
+//
+
 int main(int argc, const char * argv[]) {
     int nums[count] = {2, 1, 3, 6, 4, 4, 1, 0, 5, 8, 7};
     
@@ -174,7 +198,8 @@ int main(int argc, const char * argv[]) {
     //    quickSort(nums, count);
     //    heapSort(nums, count);
     //    shellSort(nums, count);
-    mergeSort(nums, 0, count - 1);
+    //    mergeSort(nums, 0, count - 1);
+    countSort(nums, count);
     
     for (int i = 0; i < count; i++) {
         printf("%d ", nums[i]);
