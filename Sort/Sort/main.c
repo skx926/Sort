@@ -7,6 +7,7 @@
 //
 
 #include <stdio.h>
+#include <stdlib.h>
 
 static const int count = 11;
 
@@ -131,6 +132,39 @@ void shellSort(int *nums, int count) {
     }
 }
 
+//  归并排序
+void merge(int *nums, int left, int middle, int right) {
+    int count = right - left + 1;
+    int *tempNums = malloc(sizeof(int) *count);
+    int i = left, j = middle + 1, k = 0;
+    while (i <= middle && j <= right) {
+        if (nums[i] < nums[j]) {
+            tempNums[k++] = nums[i++];
+        } else {
+            tempNums[k++] = nums[j++];
+        }
+    }
+    while (i <= middle) {
+        tempNums[k++] = nums[i++];
+    }
+    while (j <= right) {
+        tempNums[k++] = nums[j++];
+    }
+    for (int l = 0; l < k; l++) {
+        nums[left + l] = tempNums[l];
+    }
+}
+
+void mergeSort(int *nums, int left, int right) {
+    if (left >= right) {
+        return;
+    }
+    int middle = (right + left) / 2;
+    mergeSort(nums, left, middle);
+    mergeSort(nums, middle + 1, right);
+    merge(nums, left, middle, right);
+}
+
 int main(int argc, const char * argv[]) {
     int nums[count] = {2, 1, 3, 6, 4, 4, 1, 0, 5, 8, 7};
     
@@ -139,7 +173,8 @@ int main(int argc, const char * argv[]) {
     //    insertionSort(nums, count);
     //    quickSort(nums, count);
     //    heapSort(nums, count);
-    shellSort(nums, count);
+    //    shellSort(nums, count);
+    mergeSort(nums, 0, count - 1);
     
     for (int i = 0; i < count; i++) {
         printf("%d ", nums[i]);
