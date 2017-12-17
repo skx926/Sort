@@ -96,12 +96,12 @@ void quickSort(int *nums, int count) {
 // 堆排序
 void maxHeapify(int *nums, int start, int end) {
     int left = start * 2 + 1;
-    if (left < end && nums[left] > nums[start]) {
+    if (left <= end && nums[left] > nums[start]) {
         swap(nums, left, start);
         maxHeapify(nums, left, end);
     }
     int right = left + 1;
-    if (right < end && nums[right] > nums[start]) {
+    if (right <= end && nums[right] > nums[start]) {
         swap(nums, right, start);
         maxHeapify(nums, right, end);
     }
@@ -174,12 +174,12 @@ void countSort(int *nums, int count) {
             max = nums[i];
         }
     }
-    int *buckets = malloc(sizeof(int) * max);
-    memset(buckets, 0, max);
+    int *buckets = malloc(sizeof(int) * (max + 1));
+    memset(buckets, 0, max + 1);
     for (int i = 0; i < count; i++) {
         buckets[nums[i]] += 1;
     }
-    for (int i = 0, k = 0; i < max; i++) {
+    for (int i = 0, k = 0; i < max + 1; i++) {
         while (buckets[i]) {
             nums[k++] = i;
             buckets[i]--;
@@ -187,19 +187,19 @@ void countSort(int *nums, int count) {
     }
 }
 
-//
+// 基数排序
 
 int main(int argc, const char * argv[]) {
-    int nums[count] = {2, 1, 3, 6, 4, 4, 1, 0, 5, 8, 7};
+    int nums[count] = {2, 10, 33, 63, 48, 41, 1, 0, 59, 86, 77};
     
-    //    bubbleSort(nums, count);
-    //    selectionSort(nums, count);
-    //    insertionSort(nums, count);
-    //    quickSort(nums, count);
-    //    heapSort(nums, count);
-    //    shellSort(nums, count);
-    //    mergeSort(nums, 0, count - 1);
-    countSort(nums, count);
+//        bubbleSort(nums, count);
+//        selectionSort(nums, count);
+//        insertionSort(nums, count);
+//        quickSort(nums, count);
+        heapSort(nums, count);
+//        shellSort(nums, count);
+//        mergeSort(nums, 0, count - 1);
+//        countSort(nums, count);
     
     for (int i = 0; i < count; i++) {
         printf("%d ", nums[i]);
